@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    body {
+        font-size: 3vw;
+    }
+    #parent {
+        display: grid;
+        grid-template-columns: minmax(0px, max-content) minmax(0px, max-content);
+        background-color: gray;
+        gap: 25px;
+        height: 14vw;
+    }
+    #first {
+        height: auto;
+        overflow-y: scroll;
+        border: 1px solid red;
+    }
+    #first::-webkit-scrollbar {
+        display: none;
+    }
+    #second {
+        height: auto;
+        border: 1px solid red;
+    }
+</style>
+
+<body>
+    <div id="parent">
+        <div id="first">
+            <div>item</div>
+            <div>item</div>
+            <div>item</div>
+            <div>item</div>
+            <div>item</div>
+            <div>item</div>
+        </div>
+        <div id="second">
+            <div>item</div>
+            <div>item</div>
+            <div>item</div>
+            <div>item</div>
+        </div>
+    </div>
+
+    <script>
+        const secondDiv = document.getElementById("parent");
+        console.log(secondDiv.style.gap)
+    </script>
+</body>
+
+</html>
