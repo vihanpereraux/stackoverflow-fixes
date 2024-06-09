@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HRauthentication</title>
+    <style>
+        body {
+            color: white;
+            background-color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="login" method="post" class="form">
+        <h4>authenticate</h4>
+        <hr class="under-line">
+        <div class="form-row">
+            <label for="username" class="form-label">UserName</label>
+            <input type="text" id="username" name="username" required class="form-input">
+        </div>
+        <div class="form-row">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" id="password" name="password" required class="form-input">
+        </div>
+        <button id="submitButton" type="submit" class="btn btn-block btn-teritiary">Submit</button>
+    </form>
+
+    <script>
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const xhr = new XMLHttpRequest();
+
+            xhr.open('POST', 'http://localhost:3001/user-login');
+            xhr.responseType = 'json';
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.onreadystatechange = () => {
+                // if the status = 200
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    // navigation
+                    switch (xhr.response.message) {
+                        case 'username not found':
+                            console.log('display input validations !');
+                            break;
+
+                        case 'verified authentication':
+                            console.log(xhr.response.message);
+                            window.location.href = './success';
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+                // if the status = 500
+                else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 500) {
+                    console.log(xhr.response.message);
+                }
+            };
+
+            const data = {
+                'username': form.username.value,
+                'password': form.password.value
+            };
+
+            xhr.send(JSON.stringify(data));
+        });
+    </script>
+</body>
+
+</html>
